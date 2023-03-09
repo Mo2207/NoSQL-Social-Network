@@ -14,7 +14,8 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
-    thoughts: []
+    thoughts: [],
+    friends: []
   }
 )
 
