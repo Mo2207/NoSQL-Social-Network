@@ -1,21 +1,21 @@
 
-const { User } = require('../models/User');
+const { User } = require('../models');
 
 module.exports = {
   // export all functions for the routes to use
   
-  // GET all users
+  // GET all users function
   getUsers(req, res) {
     User.find()
       .then((users) => {
-        res.json(users);
+        return res.json(users);
       })
       .catch((err) => {
-        res.status(500).json(err);
+        return res.status(500).json(err);
       })
   },
 
-  // GET one user by id
+  // GET one user by id function
   getUserById(req, res) {
     User.findOne({
       _id: req.params.userId
@@ -26,8 +26,19 @@ module.exports = {
       else res.json(user);
     })
     .catch((err) => {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     })
-  }
+  },
 
+  // POST a user function
+  addUser(req, res) {
+    User.create(req.body)
+      .then((user) => {
+        return res.json(user);
+      })
+      .catch((err) => {
+        console.log("bruh")
+        return res.status(500).json(err);
+      })
+  },
 }

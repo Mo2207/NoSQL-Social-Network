@@ -5,7 +5,7 @@ const checkEmail = require('../utils/checkEmail');
 
 const userSchema = new Schema(
   {
-    username: {
+    userName: {
       type: String,
       required: true,
       unique: true,
