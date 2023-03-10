@@ -37,8 +37,31 @@ module.exports = {
         return res.json(user);
       })
       .catch((err) => {
-        console.log("bruh")
+        console.log(err);
         return res.status(500).json(err);
       })
   },
+
+  // DELETE a user by id function
+  deleteUser(req, res) {
+    User.findOneAndDelete({
+      _id: req.params.userId
+    })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({message: 'Invalid userId!'});
+      }
+      else {
+        User.deleteOne({
+          _id: {
+            $in: user.users
+          }
+        })
+        return res.json(user);
+      }
+    })
+    .catch((err) => {
+      return res.status
+    })
+  }
 }
