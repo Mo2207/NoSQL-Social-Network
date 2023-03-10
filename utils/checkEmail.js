@@ -1,9 +1,13 @@
 
 // used for validating email syntax
 const checkEmail = (email) => {
-  let regexp = /^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/;
+  let regexp = new RegExp(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})$/);
 
-  if (!regexp.test(email)) console.log("Invalid email syntax!");
+  if (!regexp.test(email)) {
+    console.log("Invalid email syntax!");
+  } else {
+    console.log("email syntax passed!");
+  }
   
   return regexp.test(email);
 }
