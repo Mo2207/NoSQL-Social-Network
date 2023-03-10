@@ -61,7 +61,7 @@ module.exports = {
       }
     })
     .catch((err) => {
-      return res.status
+      return res.status(500).json(err);
     })
   }
 }

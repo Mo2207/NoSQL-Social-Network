@@ -16,7 +16,7 @@ const thoughtSchema = new Schema(
       default: () => Date.now(),
       // use getter to format date into json
     },
-    username: {
+    userName: {
       // the user that created thought
       type: String,
       required: true

@@ -12,13 +12,14 @@ const reactionSchema = new Schema(
       required: true,
       maxLength: 280
     },
-    username: {
+    userName: {
       type: String,
       required: true
     },
     createdAt: {
       type: Date,
-      default: Date.now,
+      immutable: true,
+      default: () => Date.now(),
     }
   }
 )
