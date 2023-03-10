@@ -1,5 +1,5 @@
 
-const { Thought } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
   // export all functions for the routes to use
@@ -32,12 +32,19 @@ module.exports = {
 
   // POST a thought function
   addThought(req, res) {
-    Thought.create(req.body)
-      .then((thought) => {
-        return res.json(thought);
+    // first find the user posting the thought
+    User.findById(req.body.userId)
+      .then((user) => {
+        // now grab the thought from the req.body
+        Thought.create(req.body)
+          .then((thought) => {
+            // push and save the new thought to the users thoughts array
+            user.thoughts.push(thought);
+            user.save()
+            return res.json(thought)
+          })
       })
       .catch((err) => {
-        console.log(err);
         return res.status(500).json(err);
       })
   },
