@@ -12,7 +12,8 @@ const thoughtSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now,
+      immutable: true,
+      default: () => Date.now(),
       // use getter to format date into json
     },
     username: {
@@ -23,6 +24,12 @@ const thoughtSchema = new Schema(
     reactions: [reactionSchema]
   }
 )
+
+// virtual to return length of a thoughts reactions
+thoughtSchema.virtual('reactionCount')
+  .get(function () {
+    return this.reactions.length;
+  })
 
 const Thought = model('thought', thoughtSchema);
 module.exports = Thought;

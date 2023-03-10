@@ -1,5 +1,5 @@
 
-const { Schema, model } = require('mongoose');
+const { Schema, model, default: mongoose } = require('mongoose');
 const checkEmail = require('../utils/checkEmail');
 
 
@@ -15,13 +15,20 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
       validate: [checkEmail, "Fill valid email"],
       match: [/^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/, "Fill valid email"]
     },
-    thoughts: [],
-    friends: []
+    thoughts: [mongoose.SchemaTypes.ObjectId],
+    friends: [mongoose.SchemaTypes.ObjectId]
   }
 )
+
+// virtual to return a users friend count
+userSchema.virtual('friendCount')
+  .get(function () {
+    return this.friends.length;
+  })
 
 const User = model('user', userSchema);
 module.exports = User;
