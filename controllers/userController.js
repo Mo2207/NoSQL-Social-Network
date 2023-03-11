@@ -20,14 +20,14 @@ module.exports = {
     User.findOne({
       _id: req.params.userId
     })
-    .select('-__v')
-    .then((user) => {
-      if (!user) res.status(404).json({message: 'Invalid userId'});
-      else res.json(user);
-    })
-    .catch((err) => {
-      return res.status(500).json(err);
-    })
+      .select('-__v')
+      .then((user) => {
+        if (!user) res.status(404).json({message: 'Invalid userId'});
+        else res.json(user);
+      })
+      .catch((err) => {
+        return res.status(500).json(err);
+      })
   },
 
   // POST a user function
@@ -47,21 +47,21 @@ module.exports = {
     User.findOneAndDelete({
       _id: req.params.userId
     })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({message: 'Invalid userId!'});
-      }
-      else {
-        User.deleteOne({
-          _id: {
-            $in: user.users
-          }
-        })
-        return res.json(user);
-      }
-    })
-    .catch((err) => {
-      return res.status(500).json(err);
-    })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({message: 'Invalid userId!'});
+        }
+        else {
+          User.deleteOne({
+            _id: {
+              $in: user.users
+            }
+          })
+          return res.json(user);
+        }
+      })
+      .catch((err) => {
+        return res.status(500).json(err);
+      })
   }
 }

@@ -20,14 +20,14 @@ module.exports = {
     Thought.findOne({
       _id: req.params.thoughtId
     })
-    .select('-__v')
-    .then((thought) => {
-      if (!thought) res.status(404).json({message: 'Invalid thoughtId'});
-      else res.json(thought);
-    })
-    .catch((err) => {
-      return res.status(500).json(err);
-    })
+      .select('-__v')
+      .then((thought) => {
+        if (!thought) res.status(404).json({message: 'Invalid thoughtId'});
+        else res.json(thought);
+      })
+      .catch((err) => {
+        return res.status(500).json(err);
+      })
   },
 
   // POST a thought function
@@ -54,21 +54,31 @@ module.exports = {
     Thought.findOneAndDelete({
       _id: req.params.thoughtId
     })
-    .then((thought) => {
-      if (!thought) {
-        return res.status(404).json({message: 'Invalid thoughtId!'});
-      }
-      else {
-        Thought.deleteOne({
-          _id: {
-            $in: thought.thoughts
-          }
-        })
-        return res.json(thought);
-      }
-    })
-    .catch((err) => {
-      return res.status(500).json(err);
-    })
+      .then((thought) => {
+        if (!thought) {
+          return res.status(404).json({message: 'Invalid thoughtId!'});
+        }
+        else {
+          let deletedThought = req.params.thoughtId;
+          User.findOneAndUpdate(
+            {userName: thought.userName},
+            {$pull: {
+              thoughts: deletedThought
+            }}
+            )
+            .then((user) => {
+              Thought.deleteOne({
+                _id: {
+                  $in: thought.thoughts
+                }
+              })
+              return res.json(thought);
+            })
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        return res.status(500).json(err);
+      })
   }
 }
