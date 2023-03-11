@@ -80,5 +80,20 @@ module.exports = {
         console.log(err)
         return res.status(500).json(err);
       })
+  },
+
+  // PUT a thought by id function
+  updateThought(req, res) {
+    Thought.findOneAndUpdate(
+      {_id: req.params.thoughtId},
+      {thoughtText: req.body.thoughtText},
+      {new: true} // returns the modified document instead of original
+    )
+      .then((updatedThought) => {
+        return res.status(200).json(updatedThought);
+      })
+      .catch((err) => {
+        return res.status(404).json({message: 'Invalid thoughtId!'})
+      })
   }
 }
