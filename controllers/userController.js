@@ -71,7 +71,8 @@ module.exports = {
       {_id: req.params.userId},
       {
         userName: req.body.userName,
-        email: req.body.email
+        email: req.body.email,
+        friends: [req.body.friends]
       },
       {new: true} // returns the modified user instead of original
     )
