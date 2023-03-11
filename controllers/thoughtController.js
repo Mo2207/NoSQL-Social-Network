@@ -87,7 +87,7 @@ module.exports = {
     Thought.findOneAndUpdate(
       {_id: req.params.thoughtId},
       {thoughtText: req.body.thoughtText},
-      {new: true} // returns the modified document instead of original
+      {new: true} // returns the modified thought instead of original
     )
       .then((updatedThought) => {
         return res.status(200).json(updatedThought);

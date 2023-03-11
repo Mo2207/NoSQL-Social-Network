@@ -63,5 +63,23 @@ module.exports = {
       .catch((err) => {
         return res.status(500).json(err);
       })
+  },
+
+  // PUT a user by id function
+  updateUser(req, res) {
+    User.findByIdAndUpdate(
+      {_id: req.params.userId},
+      {
+        userName: req.body.userName,
+        email: req.body.email
+      },
+      {new: true} // returns the modified user instead of original
+    )
+      .then((updatedUser) => {
+        return res.status(200).json(updatedUser);
+      })
+      .catch((err) => {
+        return res.status(404).json({message: 'Invalid userId!'});
+      })
   }
 }
