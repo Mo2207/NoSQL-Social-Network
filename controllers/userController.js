@@ -1,5 +1,6 @@
 
 const { User } = require('../models');
+const checkEmail = require('../utils/checkEmail');
 
 module.exports = {
   // export all functions for the routes to use
@@ -80,6 +81,7 @@ module.exports = {
         return res.status(200).json(updatedUser);
       })
       .catch((err) => {
+        console.log(err)
         return res.status(404).json({message: 'Invalid userId!'});
       })
   }

@@ -10,10 +10,10 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "seeds": "node seeds/index.js"
   },
   "author": "Gabe",
   "license": "ISC",
-  "description": ""
+  "description": "Module-18-challenge"
 }
