@@ -66,14 +66,14 @@ module.exports = {
               thoughts: deletedThought
             }}
             )
-            .then((user) => {
-              Thought.deleteOne({
-                _id: {
-                  $in: thought.thoughts
-                }
+              .then((user) => {
+                Thought.deleteOne({
+                  _id: {
+                    $in: thought.thoughts
+                  }
+                })
+                return res.json(thought);
               })
-              return res.json(thought);
-            })
         }
       })
       .catch((err) => {
